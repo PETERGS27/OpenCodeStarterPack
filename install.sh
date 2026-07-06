@@ -61,10 +61,12 @@ if command -v node &>/dev/null; then
   info "Node.js found: $NODE_VERSION"
 else
   warn "Node.js is not installed"
+  echo ""
+  echo "The interactive setup wizard needs Node.js to guide you through"
+  echo "choosing the right components for your needs."
+  echo ""
   if [ "$NON_INTERACTIVE" = false ]; then
-    echo ""
-    echo "Node.js is required for the interactive setup wizard."
-    echo -n "Would you like to install Node.js? [Y/n]: "
+    echo -n "Would you like to install Node.js now? [Y/n]: "
     read -r INSTALL_NODE
     if [[ "$INSTALL_NODE" =~ ^[Yy]?$ ]]; then
       case "$OS" in
@@ -72,20 +74,20 @@ else
           if command -v brew &>/dev/null; then
             brew install node
           else
-            err "Homebrew not found. Install Node.js manually: https://nodejs.org"
+            err "Could not find Homebrew."
+            echo "Install Node.js from: https://nodejs.org (download the LTS version)"
+            echo "Then run this command again."
             exit 1
           fi
           ;;
         linux)
-          if command -v apt-get &>/dev/null; then
-            sudo apt-get update && sudo apt-get install -y nodejs npm
-          else
-            err "Unsupported package manager. Install Node.js manually: https://nodejs.org"
-            exit 1
-          fi
+          echo "Installing Node.js via apt (may ask for sudo password)..."
+          sudo apt-get update -qq && sudo apt-get install -y -qq nodejs npm
+          echo ""
           ;;
         windows)
-          warn "Install Node.js from: https://nodejs.org"
+          err "On Windows, install Node.js from: https://nodejs.org"
+          echo "Then run this command again."
           exit 1
           ;;
       esac
@@ -95,7 +97,7 @@ else
   fi
 fi
 
-# ---- Run wizard if Node.js is available ----
+# ---- Run wizard if Node.js is available (interactive mode) ----
 if [ "$HAS_NODE" = true ] && [ "$NON_INTERACTIVE" = false ]; then
   # Check if running from local repo or from curl
   if [ -f "$SCRIPT_DIR/package.json" ]; then
@@ -120,56 +122,69 @@ if [ "$HAS_NODE" = true ] && [ "$NON_INTERACTIVE" = false ]; then
   exit 0
 fi
 
-# ---- Fallback: bash-only mode ----
-info "Running in bash-only mode..."
-
-# Set defaults
-if [ -z "$PRESET" ]; then
-  if [ "$NON_INTERACTIVE" = true ]; then
-    PRESET="minimal"
-  else
-    echo ""
-    echo "Select a preset:"
-    echo "  1) minimal — vault + rules + meta only"
-    echo "  2) study — for students (research, web-extract, vault tools)"
-    echo "  3) full — everything (skills, MCP, prompts)"
-    echo -n "Choice [1/2/3] (default: 3): "
-    read -r PRESET_CHOICE
-    case "$PRESET_CHOICE" in
-      1) PRESET="minimal" ;;
-      2) PRESET="study" ;;
-      *) PRESET="full" ;;
-    esac
+# ---- Fallback: bash-only mode (no Node.js or non-interactive) ----
+if [ "$HAS_NODE" = false ]; then
+  warn "Node.js is not available."
+  echo ""
+  echo "  You can still use this package in two ways:"
+  echo ""
+  echo "  Option 1 (recommended): Install Node.js and use the interactive wizard"
+  echo "    npx opencode-starter-pack"
+  echo ""
+  echo "  Option 2: Install from GitHub repo (advanced)"
+  echo "    git clone https://github.com/PETERGS27/OpenCodeStarterPack.git"
+  echo "    cd OpenCodeStarterPack"
+  echo "    ./install.sh"
+  echo ""
+  if [ "$NON_INTERACTIVE" = false ]; then
+    echo -n "Open https://nodejs.org in your browser? [Y/n]: "
+    read -r OPEN_NODE
+    if [[ "$OPEN_NODE" =~ ^[Yy]?$ ]]; then
+      case "$OS" in
+        macos) open "https://nodejs.org" 2>/dev/null || true ;;
+        linux) xdg-open "https://nodejs.org" 2>/dev/null || true ;;
+        windows) start "https://nodejs.org" 2>/dev/null || true ;;
+      esac
+    fi
   fi
+  echo ""
+  echo "After installing Node.js, run: npx opencode-starter-pack"
+  exit 0
+fi
+
+# ---- Non-interactive mode ----
+info "Running in non-interactive mode..."
+
+if [ -z "$PRESET" ]; then
+  PRESET="minimal"
 fi
 
 if [ -z "$TARGET_DIR" ]; then
-  if [ "$NON_INTERACTIVE" = true ]; then
-    TARGET_DIR="$PWD/opencode-vault"
-  else
-    echo -n "Target directory for vault [default: $PWD/opencode-vault]: "
-    read -r TARGET_DIR_INPUT
-    TARGET_DIR="${TARGET_DIR_INPUT:-$PWD/opencode-vault}"
-  fi
+  TARGET_DIR="$PWD/opencode-vault"
 fi
 
 log "Preset: $PRESET"
 log "Target: $TARGET_DIR"
 
-# Check if running from local repo
-if [ -f "$SCRIPT_DIR/package.json" ]; then
-  log "Applying from local repo..."
-  bash "$SCRIPT_DIR/init/apply.sh" --preset "$PRESET" --dir "$TARGET_DIR" --non-interactive
-else
-  err "bash-only mode requires the full repository. Install via:"
-  echo "  git clone https://github.com/PETERGS27/OpenCodeStarterPack.git"
-  exit 1
+# Try to download repo as tarball if not in local repo
+if [ ! -f "$SCRIPT_DIR/package.json" ]; then
+  info "Downloading OpenCodeStarterPack..."
+  TEMP_DIR=$(mktemp -d)
+  curl -fsSL "https://github.com/PETERGS27/OpenCodeStarterPack/archive/refs/heads/main.tar.gz" -o "$TEMP_DIR/repo.tar.gz"
+  tar -xzf "$TEMP_DIR/repo.tar.gz" -C "$TEMP_DIR"
+  SCRIPT_DIR="$TEMP_DIR/OpenCodeStarterPack-main"
 fi
+
+log "Applying..."
+bash "$SCRIPT_DIR/init/apply.sh" --preset "$PRESET" --dir "$TARGET_DIR" --non-interactive
 
 log "Installation complete!"
 echo ""
 echo "Next steps:"
-echo "  1. Open Obsidian → Settings → Local REST API → enable → copy token"
-echo "  2. Edit $TARGET_DIR/opencode.json → paste token"
-echo "  3. Run: cd $TARGET_DIR && opencode"
+echo "  1. Open Obsidian → Open vault folder → select: $TARGET_DIR"
+echo "  2. Install the Local REST API plugin in Obsidian:"
+echo "     Settings → Community Plugins → Browse → 'Local REST API'"
+echo "  3. Enable it → copy the token → edit opencode.json → paste it"
+echo "  4. Run: cd $TARGET_DIR && opencode"
+echo "  5. Connect to AI provider: /connect in opencode TUI"
 echo ""

@@ -6,9 +6,25 @@
 # Choose your install method:
 curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
 npx opencode-starter-pack
-brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+brew install opencode-starter-pack
 git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
 ```
+
+---
+
+## Quick Start (for the impatient)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
+```
+
+The wizard will ask where your Obsidian vault is (or create a new one) and guide you through choosing the components you need.
+
+After installation:
+1. Open that folder in **Obsidian** (Open vault → Open folder as vault)
+2. Install **Local REST API** plugin (Settings → Community Plugins)
+3. Run `cd <your-vault> && opencode`
+4. Type `/start` inside opencode to see available skills
 
 ---
 
@@ -96,7 +112,8 @@ curl -fsSL https://.../install.sh | bash -s -- \
 ### brew (macOS)
 
 ```bash
-brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+brew tap PETERGS27/opencode-starter-pack
+brew install opencode-starter-pack
 ```
 
 ### git clone
@@ -175,7 +192,7 @@ cd /path/to/OpenCodeStarterPack && git pull && ./install.sh
 npm update -g opencode-starter-pack
 
 # If installed via brew:
-brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+brew upgrade opencode-starter-pack
 ```
 
 The updater detects what's already installed and only adds/changes what's new. Existing customizations are preserved.
@@ -263,6 +280,25 @@ This project includes configurations for the following third-party components, e
 | ByteStash MCP config | [PETERGS27](https://github.com/PETERGS27) | MIT | Custom configuration template |
 
 All custom MCP configurations in this pack are distributed under the MIT License by [PETERGS27](https://github.com/PETERGS27).
+
+---
+
+## Glossary
+
+| Term | What it means |
+|------|---------------|
+| **Vault** | An Obsidian folder — a collection of your notes and settings |
+| **OpenCode** | An AI coding assistant that works from your terminal |
+| **MCP** | Model Context Protocol — a way to connect OpenCode to other tools (Obsidian, Docker, Git) |
+| **MCP server** | A small program that lets OpenCode talk to a specific tool (e.g., "Obsidian MCP" lets OpenCode read and write your notes) |
+| **Skill** | A set of instructions that teaches OpenCode how to do a specific task (e.g., "research" skill searches the web) |
+| **Preset** | A pre-defined combination of skills, MCP servers, and prompts (e.g., "study" preset has research tools, "full" has everything) |
+| **API key** | A secret code that lets OpenCode connect to an AI provider (like Anthropic or OpenAI) or a service (like Context7) |
+| **Local REST API** | An Obsidian plugin that allows other programs (like OpenCode) to read and write your notes |
+| **Token** | A password-like string that proves OpenCode has permission to access your Obsidian vault |
+| **npm** | A package manager for JavaScript — used to install OpenCodeStarterPack via `npx` |
+| **brew / Homebrew** | A package manager for macOS — an alternative way to install software |
+| **Terminal** | The app where you type commands (Terminal.app on macOS, PowerShell on Windows) |
 
 ---
 
