@@ -12,6 +12,18 @@ git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
 
 ---
 
+## Prerequisites
+
+Before installing, make sure you have:
+
+1. **[Obsidian](https://obsidian.md)** installed with at least one vault created
+2. **Node.js** >= 18 (the installer can install it for you)
+3. **Git** (optional, for cloning)
+
+The vault you create with this starter pack is meant to be opened in Obsidian. All skills and rules expect Obsidian to be the frontend for your notes.
+
+---
+
 ## Features
 
 - **8 ready-to-use skills** — web-extract, research, raw-processor, sandbox, mcp-manager, vault-analyzer, skill-creator, and a blank template
@@ -200,11 +212,57 @@ OpenCodeStarterPack/
 
 ---
 
+## Obsidian Setup for OpenCode
+
+For full functionality with OpenCode, configure Obsidian as follows:
+
+### 1. Local REST API plugin
+- Open Obsidian → Settings → Community Plugins → Browse
+- Search and install **"Local REST API"** (by Coddington)
+- Enable it → copy the API token
+- You'll need this token for `opencode.json`
+
+### 2. Recommended plugins
+- **Terminal** — run shell commands inside Obsidian (for quick launch scripts)
+- **Surfing** — a web browser inside Obsidian (required if using ByteStash + quick launch)
+- **Excalidraw** — whiteboard/diagrams (recommended for vault-analyzer skill)
+
+### 3. Obsidian settings
+- Settings → Files & Links → **Automatically update internal links** → enable
+- Settings → Editor → **Spell check** → as you prefer
+- Settings → Hotkeys → optionally set hotkeys for opencode integration
+
+### 4. Vault path
+The vault created by this starter pack (`opencode-vault` by default) should be opened as an Obsidian vault:
+```
+Open Obsidian → Open another vault → Open folder as vault → select the directory
+```
+
+---
+
 ## Built on [OpenCode](https://opencode.ai)
 
 OpenCodeStarterPack is a community starter kit for **OpenCode** — an open-source AI coding assistant distributed under the [MIT License](https://github.com/anomalyco/opencode/blob/main/LICENSE).
 
 Original author: **anomalyco** ([OpenCode on GitHub](https://github.com/anomalyco/opencode))
+
+---
+
+## Third-Party Components
+
+This project includes configurations for the following third-party components, each with its own license:
+
+| Component | Author | License | Notes |
+|-----------|--------|---------|-------|
+| [docker-mcp](https://www.npmjs.com/package/docker-mcp) | dazza | MIT | MCP server for Docker |
+| [@cyanheads/git-mcp-server](https://www.npmjs.com/package/@cyanheads/git-mcp-server) | cyanheads | MIT | MCP server for Git |
+| [@modelcontextprotocol/server-filesystem](https://www.npmjs.com/package/@modelcontextprotocol/server-filesystem) | Anthropic / MCP team | MIT | MCP filesystem sandbox |
+| [Context7](https://context7.com) | Context7 team | Commercial | Requires **free registration** at context7.com |
+| [ByteStash](https://github.com/jordanistan/bytestash) | jordanistan | MIT | Self-hosted snippet manager |
+| Obsidian MCP config | [PETERGS27](https://github.com/PETERGS27) | MIT | Custom configuration template |
+| ByteStash MCP config | [PETERGS27](https://github.com/PETERGS27) | MIT | Custom configuration template |
+
+All custom MCP configurations in this pack are distributed under the MIT License by [PETERGS27](https://github.com/PETERGS27).
 
 ---
 

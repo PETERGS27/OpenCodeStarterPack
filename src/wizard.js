@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createRequire } from 'module';
-import { existsSync, readFileSync, writeFileSync, mkdirSync, cpSync } from 'fs';
+import { existsSync, readFileSync, writeFileSync, mkdirSync, cpSync, chmodSync } from 'fs';
 import { resolve, join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
@@ -503,6 +503,8 @@ async function main() {
       obsidianPort: '27123',
       sandboxPath: join(process.env.HOME || '/home', 'Documents', 'Sandbox'),
       installWhisper: false,
+      quickLaunch: false,
+      context7Register: false,
     };
   } else {
     const questions = [];
@@ -566,9 +568,45 @@ async function main() {
         message: 'Install Whisper for audio transcription? (requires brew/apt)',
         default: false,
         when: () => selectedSkills.includes('web-extract'),
+      },
+      {
+        type: 'confirm',
+        name: 'quickLaunch',
+        message: 'Generate a quick-launch script (start.sh) for OpenCode + Obsidian Terminal plugin?',
+        default: true,
+        when: () => selectedMcp.includes('bytestash'),
+      },
+      {
+        type: 'confirm',
+        name: 'context7Register',
+        message: 'Open browser to register for Context7 API key? (free, required for Context7 MCP)',
+        default: true,
+        when: () => selectedMcp.includes('context7'),
       }
     );
     answers = await inquirer.prompt(questions);
+  }
+
+  // ---- Context7 registration ----
+  if (answers.context7Register && selectedMcp.includes('context7')) {
+    console.log(chalk.cyan('\n── Context7 Registration ──'));
+    console.log(chalk.white('  Opening https://context7.com in your browser...'));
+    try {
+      const { execSync } = await import('child_process');
+      if (os === 'macos') execSync('open https://context7.com', { stdio: 'ignore' });
+      else if (os === 'linux') execSync('xdg-open https://context7.com 2>/dev/null || true', { stdio: 'ignore' });
+      else if (os === 'windows') execSync('start https://context7.com', { stdio: 'ignore' });
+    } catch { /* ignore */ }
+    console.log(chalk.white('  After registration, paste your API key into opencode.json'));
+    console.log(chalk.white('  Context7 section.'));
+    console.log();
+  }
+
+  // ---- Surfing plugin warning ----
+  if (answers.quickLaunch && selectedMcp.includes('bytestash')) {
+    console.log(chalk.yellow('  ⚠  Quick launch with ByteStash requires the Obsidian Surfing plugin.'));
+    console.log(chalk.white('     Install: Obsidian → Settings → Community Plugins → Surfing'));
+    console.log();
   }
 
   // If --dir was provided via CLI, use it directly
@@ -639,6 +677,46 @@ async function main() {
     mcpContext7: selectedMcp.includes('context7'),
   });
 
+  // ---- Generate start.sh ----
+  if (answers.quickLaunch) {
+    const startShPath = join(vaultPath, 'start.sh');
+    const bytestashDir = join(process.env.HOME || '/home', 'Documents', 'Docker', 'Bytestash');
+    const opencodeBin = join(process.env.HOME || '/home', '.opencode', 'bin', 'opencode');
+    const startShContent = `#!/bin/bash
+set -e
+
+BYTESTASH_DIR="${bytestashDir}"
+VAULT_DIR="${vaultPath}"
+
+cleanup() {
+  echo "Stopping Bytestash..."
+  (cd "$BYTESTASH_DIR" && docker compose down 2>/dev/null || true)
+  echo "Done."
+}
+
+trap cleanup EXIT
+
+echo "Starting Bytestash..."
+(cd "$BYTESTASH_DIR" && docker compose up -d)
+
+echo "Waiting for Bytestash to be ready..."
+sleep 3
+
+echo "Opening Bytestash in Obsidian..."
+if command -v open &>/dev/null; then
+  open "obsidian://web-open?url=http://localhost:7654/" 2>/dev/null || echo "  (could not open Bytestash in Obsidian)"
+fi
+
+echo "Starting OpenCode..."
+cd "$VAULT_DIR"
+opencode
+`;
+    writeFileSync(startShPath, startShContent, 'utf-8');
+    chmodSync(startShPath, 0o755);
+    console.log(chalk.green('  ✓'), 'Generated start.sh (quick launch script)');
+    console.log(chalk.white('     Run: cd', vaultPath, '&& ./start.sh'));
+  }
+
   // ---- Whisper installation ----
   if (answers.installWhisper) {
     console.log(chalk.cyan('\n── Installing Whisper ──'));
@@ -664,12 +742,34 @@ async function main() {
   console.log();
 
   console.log(chalk.cyan('── Next Steps ──\n'));
-  console.log(chalk.white('  1. Open Obsidian → Settings → Local REST API → enable'));
-  console.log(chalk.white('     → copy the token'));
-  console.log(chalk.white(`  2. Edit ${vaultPath}/opencode.json → paste token into Authorization`));
-  console.log(chalk.white(`  3. Run: cd ${vaultPath} && opencode`));
-  console.log(chalk.white('  4. Connect to provider: /connect in opencode TUI'));
-  console.log(chalk.white('  5. Run: /start to see available skills'));
+
+  console.log(chalk.white('  1. Open vault in Obsidian:'));
+  console.log(chalk.white(`     Open Obsidian → Open another vault → Open folder as vault → select:`));
+  console.log(chalk.white(`       ${vaultPath}`));
+  console.log(chalk.white(''));
+  console.log(chalk.white('  2. Install required Obsidian plugins:'));
+  console.log(chalk.white('     Settings → Community Plugins → Browse:'));
+  console.log(chalk.white('     - "Local REST API" (by Coddington) → Install & Enable'));
+  console.log(chalk.white('     - "Terminal" → Install & Enable (for quick launch)'));
+  if (selectedMcp.includes('bytestash')) {
+    console.log(chalk.white('     - "Surfing" → Install & Enable (for ByteStash integration)'));
+  }
+  console.log(chalk.white(''));
+  console.log(chalk.white(`  3. Get Obsidian API token:`));
+  console.log(chalk.white('     Settings → Local REST API → Copy token'));
+  console.log(chalk.white(`  4. Edit ${vaultPath}/opencode.json:`));
+  console.log(chalk.white('     - Paste the token into Authorization fields'));
+  if (answers.context7Register) {
+    console.log(chalk.white('     - Paste your Context7 API key into the context7 section'));
+  }
+  console.log(chalk.white(`  5. Run: cd ${vaultPath} && opencode`));
+  console.log(chalk.white('  6. Connect to provider: /connect in opencode TUI'));
+  console.log(chalk.white('  7. Run: /start to see available skills'));
+  if (existsSync(join(vaultPath, 'start.sh'))) {
+    console.log(chalk.white(''));
+    console.log(chalk.white('  Quick launch with ByteStash:'));
+    console.log(chalk.white(`    cd ${vaultPath} && ./start.sh`));
+  }
   console.log();
 }
 

@@ -10,12 +10,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PRESET="full"
 TARGET_DIR=""
 NON_INTERACTIVE=false
+GENERATE_START=false
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     --preset)  PRESET="$2"; shift 2 ;;
     --dir)     TARGET_DIR="$2"; shift 2 ;;
     --non-interactive) NON_INTERACTIVE=true; shift ;;
+    --generate-start) GENERATE_START=true; shift ;;
     *) echo "Unknown: $1"; exit 1 ;;
   esac
 done
@@ -65,6 +67,44 @@ fi
 if [ -f "$SCRIPT_DIR/modules/rules/vault-rules.md" ]; then
   cp "$SCRIPT_DIR/modules/rules/vault-rules.md" "$TARGET_DIR/.opencode/rules/vault-rules.md"
   echo "  Rules: vault-rules.md"
+fi
+
+# ---- Generate start.sh (quick launch) ----
+if [ "$GENERATE_START" = true ] && [ ! -f "$TARGET_DIR/start.sh" ]; then
+  BYTESTASH_DIR="${HOME}/Documents/Docker/Bytestash"
+  cat > "$TARGET_DIR/start.sh" << 'SHEOF'
+#!/bin/bash
+set -e
+
+BYTESTASH_DIR="$([ -n "$BYTESTASH_DIR" ] && echo "$BYTESTASH_DIR" || echo "${HOME}/Documents/Docker/Bytestash")"
+VAULT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+cleanup() {
+  echo "Stopping Bytestash..."
+  (cd "$BYTESTASH_DIR" && docker compose down 2>/dev/null || true)
+  echo "Done."
+}
+
+trap cleanup EXIT
+
+echo "Starting Bytestash..."
+(cd "$BYTESTASH_DIR" && docker compose up -d)
+
+echo "Waiting for Bytestash to be ready..."
+sleep 3
+
+echo "Opening Bytestash in Obsidian..."
+if command -v open &>/dev/null; then
+  open "obsidian://web-open?url=http://localhost:7654/" 2>/dev/null || echo "  (could not open Bytestash in Obsidian)"
+fi
+
+echo "Starting OpenCode..."
+cd "$VAULT_DIR"
+opencode
+SHEOF
+  chmod +x "$TARGET_DIR/start.sh"
+  echo "  Generated: start.sh (quick launch)"
+  echo "  ⚠  Requires Obsidian Surfing plugin for ByteStash integration"
 fi
 
 # ---- Generate README if not exists ----
