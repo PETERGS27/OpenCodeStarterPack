@@ -513,7 +513,9 @@ async function main() {
       questions.push({
         type: 'input',
         name: 'vaultPath',
-        message: 'Where to create the vault?',
+        message: `Path to your Obsidian vault:
+  (if you already have one, point to its directory)
+  (if not, a new one will be created)`,
         default: defaultVaultPath,
       });
     }
@@ -621,17 +623,22 @@ async function main() {
 
   // Check if target exists
   if (existsSync(vaultPath)) {
-    console.log(chalk.yellow(`  ⚠  Directory already exists: ${vaultPath}`));
     let overwrite = false;
     if (nonInteractive) {
+      console.log(chalk.white(`    Non-interactive mode: installing OpenCode config files`));
       overwrite = true;
     } else {
+      console.log(chalk.yellow(`  ! Existing vault found at this location`));
+      console.log(chalk.white(`    Your notes and files will NOT be touched.`));
+      console.log(chalk.white(`    Only OpenCode config files (.opencode/, CACHE/AI/, opencode.json)`));
+      console.log(chalk.white(`    will be added or updated.`));
+      console.log();
       const resp = await inquirer.prompt([
         {
           type: 'confirm',
           name: 'overwrite',
-          message: 'Overwrite existing config files? (existing notes will NOT be touched)',
-          default: false,
+          message: 'Add OpenCode configuration to this vault?',
+          default: true,
         },
       ]);
       overwrite = resp.overwrite;
