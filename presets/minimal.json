@@ -1,0 +1,11 @@
+{
+  "name": "minimal",
+  "label": "Minimal",
+  "description": "Just the vault skeleton, OpenCode config, rules, and AGENTS.md with persistent memory",
+  "modules": {
+    "skills": [],
+    "mcp": [],
+    "rules": ["vault-rules", "agents-instruct"],
+    "prompts": []
+  }
+}

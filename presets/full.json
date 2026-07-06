@@ -1,0 +1,11 @@
+{
+  "name": "full",
+  "label": "Full",
+  "description": "Everything — all skills, MCP servers, prompts, and rules. For programmers and engineers",
+  "modules": {
+    "skills": ["web-extract", "research", "raw-processor", "sandbox", "mcp-manager", "vault-analyzer", "skill-creator"],
+    "mcp": ["obsidian", "docker", "git", "sandbox", "bytestash", "context7"],
+    "rules": ["vault-rules", "agents-instruct"],
+    "prompts": ["code-review", "debug", "refactor", "architecture", "explain"]
+  }
+}

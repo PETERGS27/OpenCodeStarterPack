@@ -1,0 +1,11 @@
+{
+  "name": "study",
+  "label": "Study",
+  "description": "For students who take notes in Obsidian. Research tools, web extraction, and vault analysis",
+  "modules": {
+    "skills": ["web-extract", "research", "raw-processor", "vault-analyzer"],
+    "mcp": ["obsidian", "context7"],
+    "rules": ["vault-rules", "agents-instruct"],
+    "prompts": []
+  }
+}
