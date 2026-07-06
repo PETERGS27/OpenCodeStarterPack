@@ -383,12 +383,6 @@ function getPresetModules(preset) {
 
 // ---- Main ----
 async function main() {
-  console.log(chalk.cyan.bold('\n╔══════════════════════════════════════════╗'));
-  console.log(chalk.cyan.bold('║       OpenCodeStarterPack v1.0.0         ║'));
-  console.log(chalk.cyan.bold('╚══════════════════════════════════════════╝'));
-  console.log();
-
-  // Parse CLI args
   const args = process.argv.slice(2);
   const cliPreset = args.includes('--preset') ? args[args.indexOf('--preset') + 1] : null;
   const cliDir = args.includes('--dir') ? args[args.indexOf('--dir') + 1] : null;
@@ -414,6 +408,11 @@ Examples:
 `));
     process.exit(0);
   }
+
+  console.log(chalk.cyan.bold('\n╔══════════════════════════════════════════╗'));
+  console.log(chalk.cyan.bold('║       OpenCodeStarterPack v1.0.0         ║'));
+  console.log(chalk.cyan.bold('╚══════════════════════════════════════════╝'));
+  console.log();
 
   // ---- Step 1: Environment detection ----
   console.log(chalk.cyan('── Environment Detection ──'));
