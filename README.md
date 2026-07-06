@@ -6,6 +6,9 @@
 # Choose your install method:
 curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
 npx opencode-starter-pack
+
+# or
+npx OpenCodeStarterPack
 brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
 git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
 ```
@@ -89,6 +92,9 @@ If Node.js is detected, the interactive wizard launches automatically. If not, y
 
 ```bash
 npx opencode-starter-pack
+
+# or
+npx OpenCodeStarterPack
 ```
 
 Interactive wizard with full module selection, configuration, and apply.

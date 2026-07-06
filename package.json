@@ -1,10 +1,11 @@
 {
-  "name": "OpenCodeStarterPack",
+  "name": "opencode-starter-pack",
   "version": "1.0.0",
   "description": "One-command starter kit for OpenCode: skills, MCP configs, rules, and prompts",
   "type": "module",
   "bin": {
-    "OpenCodeStarterPack": "./src/wizard.js"
+    "OpenCodeStarterPack": "./src/wizard.js",
+    "opencode-starter-pack": "./src/wizard.js"
   },
   "files": [
     "src/",
