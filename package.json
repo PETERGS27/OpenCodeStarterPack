@@ -1,0 +1,47 @@
+{
+  "name": "OpenCodeStarterPack",
+  "version": "1.0.0",
+  "description": "One-command starter kit for OpenCode: skills, MCP configs, rules, and prompts",
+  "type": "module",
+  "bin": {
+    "OpenCodeStarterPack": "./src/wizard.js"
+  },
+  "files": [
+    "src/",
+    "modules/",
+    "presets/",
+    "init/",
+    "install.sh"
+  ],
+  "scripts": {
+    "start": "node src/wizard.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1",
+    "commander": "^13.1.0",
+    "inquirer": "^12.4.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "opencode",
+    "starter",
+    "bootstrap",
+    "skills",
+    "mcp",
+    "obsidian",
+    "ai-agent"
+  ],
+  "author": "PETERGS27 <p.gusev777@protonmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PETERGS27/OpenCodeStarterPack.git"
+  },
+  "homepage": "https://github.com/PETERGS27/OpenCodeStarterPack#readme",
+  "bugs": {
+    "url": "https://github.com/PETERGS27/OpenCodeStarterPack/issues"
+  }
+}

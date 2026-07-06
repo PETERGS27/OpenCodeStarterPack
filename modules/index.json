@@ -1,0 +1,118 @@
+{
+  "version": "1.0.0",
+  "description": "OpenCodeStarterPack module manifest",
+  "modules": {
+    "skills": {
+      "type": "skills",
+      "label": "Skills",
+      "description": "Ready-to-use OpenCode skills",
+      "items": {
+        "web-extract": {
+          "label": "web-extract",
+          "description": "Extract content from web pages and YouTube videos with transcription"
+        },
+        "research": {
+          "label": "research",
+          "description": "Search the web, filter results, add to reading list"
+        },
+        "raw-processor": {
+          "label": "raw-processor",
+          "description": "Scan INBOX/, cluster by topic, create indexes, distribute to FILES/"
+        },
+        "sandbox": {
+          "label": "sandbox",
+          "description": "Docker-based code sandbox for C/C++/Python"
+        },
+        "mcp-manager": {
+          "label": "mcp-manager",
+          "description": "Add and remove MCP servers interactively"
+        },
+        "vault-analyzer": {
+          "label": "vault-analyzer",
+          "description": "Analyze vault structure, find orphans, suggest connections"
+        },
+        "skill-creator": {
+          "label": "skill-creator",
+          "description": "Create new skills interactively"
+        },
+        "template": {
+          "label": "skill template",
+          "description": "Blank skill template for creating your own"
+        }
+      }
+    },
+    "mcp": {
+      "type": "mcp",
+      "label": "MCP Servers",
+      "description": "Pre-configured MCP server configs",
+      "items": {
+        "obsidian": {
+          "label": "Obsidian",
+          "description": "Obsidian Local REST API (required for vault skills)"
+        },
+        "docker": {
+          "label": "Docker",
+          "description": "Docker container management MCP"
+        },
+        "git": {
+          "label": "Git",
+          "description": "Git version control MCP"
+        },
+        "sandbox": {
+          "label": "Sandbox",
+          "description": "Filesystem sandbox for code compilation"
+        },
+        "bytestash": {
+          "label": "ByteStash",
+          "description": "Self-hosted code snippet manager"
+        },
+        "context7": {
+          "label": "Context7",
+          "description": "Library/framework documentation search"
+        }
+      }
+    },
+    "rules": {
+      "type": "rules",
+      "label": "Rules",
+      "description": "Vault management rules and AI agent instructions",
+      "items": {
+        "vault-rules": {
+          "label": "Vault Rules",
+          "description": "Opencode rules for vault interaction (read-only defaults, file placement, etc.)"
+        },
+        "agents-instruct": {
+          "label": "AGENTS.md",
+          "description": "AI agent instructions with role hierarchy and persistent memory"
+        }
+      }
+    },
+    "prompts": {
+      "type": "prompts",
+      "label": "Prompts",
+      "description": "Coding and development prompt templates",
+      "items": {
+        "code-review": {
+          "label": "Code Review",
+          "description": "Review code for bugs, style, and best practices"
+        },
+        "debug": {
+          "label": "Debug",
+          "description": "Systematic debugging workflow"
+        },
+        "refactor": {
+          "label": "Refactor",
+          "description": "Safe refactoring with test preservation"
+        },
+        "architecture": {
+          "label": "Architecture",
+          "description": "System design and architecture decisions"
+        },
+        "explain": {
+          "label": "Explain",
+          "description": "Explain code or concepts in detail"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "remote",
+  "url": "http://localhost:7654/mcp",
+  "headers": {
+    "Authorization": "Bearer {token}"
+  }
+}
