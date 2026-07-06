@@ -6,7 +6,7 @@
 # Choose your install method:
 curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
 npx opencode-starter-pack
-brew install opencode-starter-pack
+brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
 git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
 ```
 
@@ -112,8 +112,7 @@ curl -fsSL https://.../install.sh | bash -s -- \
 ### brew (macOS)
 
 ```bash
-brew tap PETERGS27/opencode-starter-pack
-brew install opencode-starter-pack
+brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
 ```
 
 ### git clone
@@ -192,7 +191,7 @@ cd /path/to/OpenCodeStarterPack && git pull && ./install.sh
 npm update -g opencode-starter-pack
 
 # If installed via brew:
-brew upgrade opencode-starter-pack
+brew reinstall https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
 ```
 
 The updater detects what's already installed and only adds/changes what's new. Existing customizations are preserved.

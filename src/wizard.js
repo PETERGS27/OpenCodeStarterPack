@@ -394,6 +394,27 @@ async function main() {
   const cliDir = args.includes('--dir') ? args[args.indexOf('--dir') + 1] : null;
   const nonInteractive = args.includes('--non-interactive');
 
+  if (args.includes('--help') || args.includes('-h')) {
+    console.log(chalk.white(`
+Usage: opencode-starter-pack [options]
+
+One-command starter kit for OpenCode — skills, MCP configs, rules & prompts.
+
+Options:
+  --preset <name>       Skip the wizard, use a preset:
+                        minimal, study, full, custom
+  --dir <path>          Target directory for the vault
+  --non-interactive     Use all defaults, no prompts
+  --help, -h            Show this message
+
+Examples:
+  npx opencode-starter-pack
+  npx opencode-starter-pack --preset full --dir ~/Documents/MyVault
+  curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash -s -- --non-interactive
+`));
+    process.exit(0);
+  }
+
   // ---- Step 1: Environment detection ----
   console.log(chalk.cyan('── Environment Detection ──'));
   const os = detectOS();
