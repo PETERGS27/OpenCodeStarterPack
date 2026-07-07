@@ -1,5 +1,12 @@
 # OpenCodeStarterPack
 
+<p align="center">
+  <a href="#english">🇬🇧 English</a> •
+  <a href="#russian">🇷🇺 Русский</a>
+</p>
+
+<a id="english"></a>
+
 **One-command starter kit for [OpenCode](https://opencode.ai).** Skills, MCP configs, rules, and prompts — modular, presettable, and updatable.
 
 ```bash
@@ -306,6 +313,325 @@ All custom MCP configurations in this pack are distributed under the MIT License
 | **Terminal** | The app where you type commands (Terminal.app on macOS, PowerShell on Windows) |
 
 ---
+
+<a id="russian"></a>
+<details>
+<summary>🇷🇺 Русская версия</summary>
+
+# OpenCodeStarterPack
+
+<p align="center">
+  <a href="#english">🇬🇧 English</a> •
+  <a href="#russian">🇷🇺 Русский</a>
+</p>
+
+**Однокомандный стартовый набор для [OpenCode](https://opencode.ai).** Навыки, MCP конфиги, правила и промпты — модульные, с пресетами и обновлением.
+
+```bash
+# Выбери способ установки:
+curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
+npx opencode-starter-pack
+
+# или
+npx OpenCodeStarterPack
+brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
+```
+
+---
+
+## Быстрый старт (для нетерпеливых)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
+```
+
+Мастер спросит, где находится твоё Obsidian хранилище (или создаст новое), и поможет выбрать нужные компоненты.
+
+После установки:
+1. Открой эту папку в **Obsidian** (Open vault → Open folder as vault)
+2. Установи плагин **Local REST API** (Настройки → Community Plugins)
+3. Запусти `cd <твоё-хранилище> && opencode`
+4. Напиши `/start` внутри opencode, чтобы увидеть доступные навыки
+
+---
+
+## Требования
+
+Перед установкой убедись, что у тебя есть:
+
+1. **[Obsidian](https://obsidian.md)** с хотя бы одним созданным хранилищем
+2. **Node.js** >= 18 (установщик может установить его сам)
+3. **Git** (опционально, для клонирования)
+
+Хранилище, созданное этим стартовым набором, предназначено для открытия в Obsidian. Все навыки и правила ожидают, что Obsidian будет интерфейсом для твоих заметок.
+
+---
+
+## Возможности
+
+- **8 готовых навыков** — web-extract, research, raw-processor, sandbox, mcp-manager, vault-analyzer, skill-creator и пустой шаблон
+- **6 MCP конфигов** — Obsidian, Docker, Git, Sandbox, ByteStash, Context7
+- **Правила + AGENTS.md** — правила управления хранилищем и инструкции для AI-агентов с постоянной памятью
+- **5 промптов** — code-review, debug, refactor, architecture, explain
+- **4 пресета** — minimal, study, full, custom
+- **Идемпотентность** — можно запускать повторно, ничего не перезаписывает без подтверждения
+- **Кроссплатформенность** — macOS, Linux, Windows
+
+---
+
+## Пресеты
+
+| Пресет | Структура хранилища + Правила + Мета | Навыки | MCP | Промпты |
+|--------|:-----------------------------------:|:------:|:---:|:-------:|
+| **minimal** | ✅ обязательно | — | — | — |
+| **study** | ✅ обязательно | research, web-extract, raw-processor, vault-analyzer | Obsidian, Context7 | — |
+| **full** | ✅ обязательно | все 7 | все 6 | все 5 |
+| **custom** | ✅ обязательно | выбираешь ты ✅ | выбираешь ты ✅ | выбираешь ты ✅ |
+
+### minimal
+Только скелет хранилища, конфиг OpenCode, правила и AGENTS.md с постоянной памятью. Без лишнего. Для тех, кто хочет начать с нуля.
+
+### study
+Для студентов, которые ведут заметки в Obsidian. Инструменты исследования, извлечения из веба, обработки сырых данных и анализа хранилища. Без инструментов для разработки.
+
+### full
+Всё — все навыки, MCP серверы, промпты и правила. Для программистов, инженеров и всех, кто строит свои AI-инструменты.
+
+### custom
+Выбери именно то, что нужно, с помощью интерактивных чекбоксов.
+
+---
+
+## Установка
+
+### curl | bash (без требований)
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/install.sh | bash
+```
+
+Если Node.js обнаружен, интерактивный мастер запустится автоматически. Если нет — спросит, хочешь ли установить его.
+
+### npx (требуется Node.js)
+
+```bash
+npx opencode-starter-pack
+
+# или
+npx OpenCodeStarterPack
+```
+
+Интерактивный мастер с полным выбором модулей, настройкой и применением.
+
+### Флаги
+
+```bash
+curl -fsSL https://.../install.sh | bash -s -- \
+  --preset full \
+  --dir ~/Documents/MyVault \
+  --non-interactive
+```
+
+| Флаг | Описание |
+|------|----------|
+| `--preset <имя>` | Пропустить мастера, использовать пресет: minimal, study, full |
+| `--dir <путь>` | Целевая директория для хранилища |
+| `--non-interactive` | Без запросов, все по умолчанию |
+| `--help` | Показать справку |
+
+### brew (macOS)
+
+```bash
+brew install https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+```
+
+### git clone
+
+```bash
+git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
+cd OpenCodeStarterPack
+./install.sh
+```
+
+---
+
+## Что устанавливается
+
+### Структура хранилища
+
+```
+vault/
+├── .opencode/
+│   ├── skills/           # Копируются из выбранных модулей
+│   └── rules/            # vault-rules.md + agents-instruct.md
+├── INBOX/
+│   ├── AI_READED/        # Для навыка web-extract
+│   └── RAW/              # Для навыка raw-processor
+├── FILES/                # Организованные заметки по темам
+├── DESKTOP/              # Активное рабочее пространство
+├── CACHE/AI/             # Мета-файлы (AGENTS.md, STRUCTURE.md и т.д.)
+├── INDEXES/              # Список чтения и указатели тем
+├── README.md             # Панель управления хранилищем
+└── opencode.json         # Конфиг OpenCode с MCP
+```
+
+### Навыки
+
+| Навык | Описание |
+|-------|----------|
+| **web-extract** | Извлечение контента из веб-страниц и YouTube-видео с транскрипцией |
+| **research** | Поиск в интернете, фильтрация результатов, добавление в список чтения |
+| **raw-processor** | Сканирование INBOX/, кластеризация по темам, создание указателей, распределение по FILES/ |
+| **sandbox** | Docker-песочница для кода (C/C++/Python) |
+| **mcp-manager** | Добавление/удаление MCP серверов |
+| **vault-analyzer** | Анализ структуры хранилища, поиск сирот, предложение связей |
+| **skill-creator** | Создание новых навыков интерактивно |
+| **template** | Пустой шаблон для твоих навыков |
+
+### MCP конфиги
+
+| MCP | Тип |
+|-----|------|
+| **Obsidian** | Remote (Local REST API) |
+| **Docker** | Local (npx docker-mcp) |
+| **Git** | Local (npx @cyanheads/git-mcp-server) |
+| **Sandbox** | Local (npx server-filesystem) |
+| **ByteStash** | Remote (самостоятельный менеджер сниппетов) |
+| **Context7** | Remote (поиск документации) |
+
+### Промпты
+
+| Промпт | Назначение |
+|--------|------------|
+| **code-review** | Проверка кода на баги, стиль и лучшие практики |
+| **debug** | Систематическая отладка |
+| **refactor** | Безопасный рефакторинг с сохранением тестов |
+| **architecture** | Проектирование систем и архитектурные решения |
+| **explain** | Объяснение кода или концепций в деталях |
+
+---
+
+## Обновление
+
+```bash
+# Если установлено через curl | bash (git clone):
+cd /path/to/OpenCodeStarterPack && git pull && ./install.sh
+
+# Если установлено через npm:
+npm update -g opencode-starter-pack
+
+# Если установлено через brew:
+brew reinstall https://raw.githubusercontent.com/PETERGS27/OpenCodeStarterPack/main/Formula/opencode-starter-pack.rb
+```
+
+Обновлятор определяет, что уже установлено, и только добавляет/меняет новое. Существующие кастомизации сохраняются.
+
+---
+
+## Разработка
+
+```bash
+git clone https://github.com/PETERGS27/OpenCodeStarterPack.git
+cd OpenCodeStarterPack
+npm install
+./install.sh --dir /tmp/test-vault --non-interactive
+```
+
+### Структура проекта
+
+```
+OpenCodeStarterPack/
+├── README.md           # Этот файл
+├── install.sh          # Bash точка входа (curl | bash)
+├── package.json        # npm точка входа
+├── src/wizard.js       # Интерактивный Node.js CLI
+├── modules/
+│   ├── index.json      # Манифест модулей
+│   ├── skills/         # Шаблоны навыков (*/SKILL.md)
+│   ├── mcp/            # MCP конфиги (*.json)
+│   ├── rules/          # Правила хранилища + шаблон AGENTS
+│   └── prompts/        # Промпты для кодинга (*.md)
+├── presets/            # Определения пресетов (*.json)
+├── init/               # Скрипты применения и обновления
+└── Formula/            # Homebrew формула
+```
+
+---
+
+## Настройка Obsidian для OpenCode
+
+Для полной функциональности с OpenCode настрой Obsidian следующим образом:
+
+### 1. Плагин Local REST API
+- Открой Obsidian → Настройки → Community Plugins → Browse
+- Найди и установи **"Local REST API"** (от Coddington)
+- Включи его → скопируй API токен
+- Он понадобится для `opencode.json`
+
+### 2. Рекомендуемые плагины
+- **Terminal** — запуск команд из Obsidian (для быстрых скриптов)
+- **Surfing** — веб-браузер внутри Obsidian (требуется для ByteStash + быстрого запуска)
+- **Excalidraw** — доски и диаграммы (рекомендуется для навыка vault-analyzer)
+
+### 3. Настройки Obsidian
+- Настройки → Файлы и ссылки → **Автоматически обновлять внутренние ссылки** → включить
+- Настройки → Редактор → **Проверка орфографии** → как хочешь
+- Настройки → Горячие клавиши → опционально настрой горячие клавиши для интеграции с opencode
+
+### 4. Путь к хранилищу
+Хранилище, созданное этим стартовым набором (`opencode-vault` по умолчанию), нужно открыть как хранилище Obsidian:
+
+```
+Открой Obsidian → Open another vault → Open folder as vault → выбери директорию
+```
+
+---
+
+## Сделано на [OpenCode](https://opencode.ai)
+
+OpenCodeStarterPack — это стартовый набор для **OpenCode** — открытого AI-ассистента для кодинга, распространяемого под лицензией [MIT](https://github.com/anomalyco/opencode/blob/main/LICENSE).
+
+Оригинальный автор: **anomalyco** ([OpenCode на GitHub](https://github.com/anomalyco/opencode))
+
+---
+
+## Сторонние компоненты
+
+Этот проект включает конфигурации для следующих сторонних компонентов, каждый со своей лицензией:
+
+| Компонент | Автор | Лицензия | Примечания |
+|-----------|-------|----------|------------|
+| [docker-mcp](https://www.npmjs.com/package/docker-mcp) | dazza | MIT | MCP сервер для Docker |
+| [@cyanheads/git-mcp-server](https://www.npmjs.com/package/@cyanheads/git-mcp-server) | cyanheads | MIT | MCP сервер для Git |
+| [@modelcontextprotocol/server-filesystem](https://www.npmjs.com/package/@modelcontextprotocol/server-filesystem) | Anthropic / MCP team | MIT | MCP песочница файловой системы |
+| [Context7](https://context7.com) | Context7 team | Commercial | Требуется **бесплатная регистрация** на context7.com |
+| [ByteStash](https://github.com/jordanistan/bytestash) | jordanistan | MIT | Самостоятельный менеджер сниппетов |
+| Obsidian MCP конфиг | [PETERGS27](https://github.com/PETERGS27) | MIT | Шаблон конфигурации |
+| ByteStash MCP конфиг | [PETERGS27](https://github.com/PETERGS27) | MIT | Шаблон конфигурации |
+
+Все кастомные MCP конфигурации в этом наборе распространяются под лицензией MIT от [PETERGS27](https://github.com/PETERGS27).
+
+---
+
+## Глоссарий
+
+| Термин | Значение |
+|--------|----------|
+| **Vault (Хранилище)** | Папка Obsidian или коллекция твоих заметок и настроек |
+| **OpenCode** | AI-ассистент для кодинга, работающий из терминала |
+| **MCP** | Model Context Protocol — способ подключения OpenCode к другим инструментам (Obsidian, Docker, Git) |
+| **MCP сервер** | Небольшая программа, позволяющая OpenCode общаться с конкретным инструментом |
+| **Навык (Skill)** | Набор инструкций, обучающих OpenCode выполнять конкретную задачу |
+| **Пресет** | Предопределённая комбинация навыков, MCP серверов и промптов |
+| **API ключ** | Секретный код для подключения OpenCode к AI-провайдеру или сервису |
+| **Local REST API** | Плагин Obsidian, позволяющий другим программам читать и писать твои заметки |
+| **Токен** | Строка-пароль, подтверждающая, что OpenCode имеет доступ к твоему хранилищу Obsidian |
+| **npm** | Менеджер пакетов для JavaScript — используется для установки OpenCodeStarterPack через `npx` |
+| **brew / Homebrew** | Менеджер пакетов для macOS — альтернативный способ установки ПО |
+| **Терминал** | Приложение для ввода команд (Terminal.app на macOS, PowerShell на Windows) |
+
+</details>
 
 ## License
 
