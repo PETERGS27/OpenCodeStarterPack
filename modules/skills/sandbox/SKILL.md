@@ -5,11 +5,11 @@ description: Docker-based code sandbox — create projects, compile, run, and ma
 
 ## Docker image
 
-The sandbox runs on `petersg27/sandbox-dev` ([Docker Hub](https://hub.docker.com/r/petersg27/sandbox-dev)) — Debian bookworm-slim with g++, python3, cmake, make, git, nodejs, npm.
+The sandbox runs on `petergs27/sandbox-dev` ([Docker Hub](https://hub.docker.com/r/petergs27/sandbox-dev)) — Debian bookworm-slim with g++, python3, cmake, make, git, nodejs, npm.
 
 ```bash
 # Pull pre-built image
-docker pull petersg27/sandbox-dev
+docker pull petergs27/sandbox-dev
 
 # Or build locally (Dockerfile included in repo)
 cd OpenCodeStarterPack/modules/skills/sandbox
