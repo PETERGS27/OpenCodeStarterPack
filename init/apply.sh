@@ -57,7 +57,7 @@ if [ -d "$SKILLS_DIR" ]; then
     skill_name=$(basename "$skill_dir")
     mkdir -p "$TARGET_DIR/.opencode/skills/$skill_name"
     if [ -f "$skill_dir/SKILL.md" ]; then
-      cp "$skill_dir/SKILL.md" "$TARGET_DIR/.opencode/skills/$skill_name/SKILL.md"
+      cp "$skill_dir/"* "$TARGET_DIR/.opencode/skills/$skill_name/" 2>/dev/null
       echo "  Skill: $skill_name"
     fi
   done

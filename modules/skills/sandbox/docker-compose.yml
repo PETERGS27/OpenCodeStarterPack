@@ -1,0 +1,13 @@
+services:
+  dev:
+    build: .
+    image: sandbox-dev
+    container_name: sandbox-dev
+    working_dir: /workspace
+    volumes:
+      - ./projects:/workspace/projects
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    command: tail -f /dev/null
+    stdin_open: true
+    tty: true

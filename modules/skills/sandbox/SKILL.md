@@ -3,6 +3,21 @@ name: sandbox
 description: Docker-based code sandbox — create projects, compile, run, and manage containers
 ---
 
+## Docker image
+
+The sandbox runs on `petersg27/sandbox-dev` ([Docker Hub](https://hub.docker.com/r/petersg27/sandbox-dev)) — Debian bookworm-slim with g++, python3, cmake, make, git, nodejs, npm.
+
+```bash
+# Pull pre-built image
+docker pull petersg27/sandbox-dev
+
+# Or build locally (Dockerfile included in repo)
+cd OpenCodeStarterPack/modules/skills/sandbox
+docker compose up -d
+```
+
+The `Dockerfile` and `docker-compose.yml` are part of the sandbox module.
+
 ## What it does
 
 Provides an isolated environment for code development via a Docker container. Creates projects in the sandbox directory, compiles and runs code inside the container, manages container lifecycle, and exports finished code.
@@ -63,8 +78,14 @@ Run after code execution:
 ### 4. Rebuild container
 
 1. Stop and remove container if running
-2. Rebuild image
-3. Start fresh container
+2. Rebuild image:
+   ```bash
+   docker compose -f modules/skills/sandbox/docker-compose.yml build
+   ```
+3. Start fresh container:
+   ```bash
+   docker compose -f modules/skills/sandbox/docker-compose.yml up -d
+   ```
 
 ### 5. Export code
 

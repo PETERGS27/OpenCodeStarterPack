@@ -46,7 +46,7 @@ if [ -d "$SKILLS_SRC" ]; then
       SKIPPED=$((SKIPPED + 1))
     else
       mkdir -p "$SKILLS_DEST/$skill_name"
-      cp "$skill_dir/SKILL.md" "$SKILLS_DEST/$skill_name/SKILL.md"
+      cp "$skill_dir/"* "$SKILLS_DEST/$skill_name/" 2>/dev/null
       echo "  + $skill_name (installed)"
       UPDATED=$((UPDATED + 1))
     fi
